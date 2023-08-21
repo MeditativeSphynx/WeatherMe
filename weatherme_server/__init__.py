@@ -2,7 +2,7 @@ import os
 
 from flask import Flask
 
-from weather_api_server.weather import weather_api
+from weather import weather_api
 
 
 def create_app(text_config=None):
