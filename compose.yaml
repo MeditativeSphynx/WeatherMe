@@ -1,0 +1,16 @@
+version: "3.7"
+
+services:
+  wmclient:
+    build:
+      context: ./weatherme_client
+    container_name: wmclient
+    ports:
+      - "4200:4200"
+  
+  wmserver:
+    build:
+      context: ./weatherme_server
+    container_name: wmserver
+    ports:
+      - "5000:5000"
