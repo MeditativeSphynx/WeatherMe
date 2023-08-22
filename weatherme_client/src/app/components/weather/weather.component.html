@@ -1,1 +1,4 @@
-<p>weather works!</p>
+<div *ngIf="weather_data$ | async; let data">
+    <h2>Your weather for {{ data.city }}, {{ data.region_code }}</h2>
+</div>
+

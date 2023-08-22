@@ -1,12 +1,14 @@
 import os
 
 from flask import Flask
+from flask_cors import CORS
 
 from weather import weather_api
 
 
 def create_app(text_config=None):
     app = Flask(__name__, instance_relative_config=True)
+    CORS(app)
     app.config.from_mapping(
         SECRET_KEY='dev'  # At this point, I don't have plans for a DB.
     )

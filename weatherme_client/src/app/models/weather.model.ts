@@ -1,1 +1,3 @@
-export interface WeatherModel {}
+export interface WeatherModel {
+    properties: any;
+}
