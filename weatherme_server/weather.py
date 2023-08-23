@@ -8,9 +8,6 @@ from flask import request, Blueprint
 
 weather_api = Blueprint('weather_api', __name__)
 
-os.environ['IPSTACK_KEY'] = '2de799aa7783332f9eb3db86d67496f1'  # REMOVE AFTER TESTING
-os.environ['WEATHER_KEY'] = '5dc4e6b937174251beb233810232208'  # TODO: add to docker
-
 ip_stack_key = os.environ.get("IPSTACK_KEY")
 weather_key = os.environ.get("WEATHER_KEY")
 
