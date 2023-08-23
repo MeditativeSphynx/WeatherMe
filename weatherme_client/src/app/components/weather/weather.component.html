@@ -16,33 +16,34 @@
         <div class="card-body">
             <div class="threeday-overview">
                 <div class="threeday-forecast-head">
-                    <h4 class="card-title">Next 3 Days</h4>
+                    <h4 class="card-title">
+                        <img class="icon" src="assets/sun-and-moon.png"/> Next 3 Days
+                    </h4>
                 </div>
                 <ul class="list-group">
                     <li class="list-group-item" *ngFor="let d of data.forecast.forecastday">
                         <h4>
-                            <img [attr.src]="d.day.condition.icon"/>
-                            {{ d.date | date }}
+                            <img [attr.src]="d.day.condition.icon"/> {{ d.date | date }}
                         </h4>
                         <p class="flex">
                             <span class="btn btn-outline-danger temperature-badge shadow" *ngIf="d.day.maxtemp_f > 90">
-                                <img src="assets/temp.png"/> {{ d.day.maxtemp_f }}&#176;F
+                                <img class="icon" src="assets/temp.png"/> {{ d.day.maxtemp_f }}&#176;F
                             </span>
                             <span class="btn btn-outline-warning temperature-badge shadow" *ngIf="d.day.maxtemp_f < 90 && d.day.maxtemp_f >= 75">
-                                <img src="assets/temp.png"/> {{ d.day.maxtemp_f }}&#176;F
+                                <img class="icon" src="assets/temp.png"/> {{ d.day.maxtemp_f }}&#176;F
                             </span>
                             <span class="btn btn-outline-success temperature-badge shadow" *ngIf="d.day.maxtemp_f < 75">
-                                <img src="assets/temp.png"/> {{ d.day.maxtemp_f }}&#176;F
+                                <img class="icon" src="assets/temp.png"/> {{ d.day.maxtemp_f }}&#176;F
                             </span>&nbsp;
                             
                             <span class="btn btn-outline-success temperature-badge shadow" *ngIf="d.day.mintemp_f >= 70">
-                                <img src="assets/temp.png"/> {{ d.day.mintemp_f }}&#176;F&nbsp;
+                                <img class="icon" src="assets/temp.png"/> {{ d.day.mintemp_f }}&#176;F&nbsp;
                             </span>
                             <span class="btn btn-outline-primary temperature-badge shadow" *ngIf="d.day.mintemp_f < 70">
-                                <img src="assets/temp.png"/> {{ d.day.mintemp_f }}&#176;F&nbsp;
+                                <img class="icon" src="assets/temp.png"/> {{ d.day.mintemp_f }}&#176;F&nbsp;
                             </span>&nbsp;
 
-                            <span class="btn btn-outline-info temperature-badge shadow"><img src="assets/humidity.png"/> {{ d.day.avghumidity }}%</span>
+                            <span class="btn btn-outline-info temperature-badge shadow"><img class="icon" src="assets/humidity.png"/> {{ d.day.avghumidity }}%</span>
                         </p>
                     </li>
                 </ul>
@@ -54,22 +55,22 @@
                 <div class="col">
                     <p>Low Temps</p>
                     <div class="btn btn-outline-danger temperature-badge shadow-sm">
-                        <img src="assets/temp.png"/> + 90&#176;F
+                        <img class="icon" src="assets/temp.png"/> + 90&#176;F
                     </div>&nbsp;
                     <div class="btn btn-outline-warning temperature-badge shadow-sm">
-                        <img src="assets/temp.png"/> 75 - 89&#176;F
+                        <img class="icon" src="assets/temp.png"/> 75 - 89&#176;F
                     </div>&nbsp;
                     <div class="btn btn-outline-info temperature-badge shadow-sm">
-                        <img src="assets/temp.png"/> < 75&#176;F
+                        <img class="icon" src="assets/temp.png"/> < 75&#176;F
                     </div>
                 </div>
                 <div class="col">
                     <p>High Temps</p>
                     <div class="btn btn-outline-danger temperature-badge shadow-sm">
-                        <img src="assets/temp.png"/> + 70&#176;F
+                        <img class="icon" src="assets/temp.png"/> + 70&#176;F
                     </div>&nbsp;
                     <div class="btn btn-outline-info temperature-badge shadow-sm">
-                        <img src="assets/temp.png"/> < 70&#176;F
+                        <img class="icon" src="assets/temp.png"/> < 70&#176;F
                     </div>
                 </div>
             </div>
