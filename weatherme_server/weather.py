@@ -8,6 +8,11 @@ from flask import request, Blueprint
 
 weather_api = Blueprint('weather_api', __name__)
 
+# For development, uncomment the two keys below. Be sure to remove them
+# before deploying to production.
+# os.environ['IPSTACK_KEY'] = '2de799aa7783332f9eb3db86d67496f1'
+# os.environ['WEATHER_KEY'] = '5dc4e6b937174251beb233810232208'
+
 ip_stack_key = os.environ.get("IPSTACK_KEY")
 weather_key = os.environ.get("WEATHER_KEY")
 
@@ -32,11 +37,12 @@ def get_weather_data():
         # Otherwise, set public_ip to the value of ip
         public_ip = ip
 
+    # use the client-user's ip to get their location
     geo_ip_uri = f'{ip_stack_base_uri}/{public_ip}?access_key={ip_stack_key}'
     geo_req = requests.get(geo_ip_uri).json()
-
     city = geo_req.get('city')
 
+    # Get the current weather for the specified city.
     weather_resp = requests.get(
         f'{weatherapi_base_uri}/forecast.json?key={weather_key}&q={city}&aqi=no&days=3'
     ).json()
