@@ -1,5 +1,5 @@
 import { Component, inject } from '@angular/core';
-import { Observable } from 'rxjs';
+import { Observable, interval } from 'rxjs';
 import { WeatherModel, WeatherOverviewModel } from 'src/app/models/weather.model';
 import { WeatherService } from 'src/app/services/weather.service';
 
@@ -10,15 +10,26 @@ import { WeatherService } from 'src/app/services/weather.service';
 })
 export class WeatherComponent {
   current_weather_data$?: Observable<WeatherOverviewModel>;
+  // current_weather_data$: any;
+  interval: any;
   weather_service: WeatherService = inject(WeatherService);
 
   constructor(private weatherService: WeatherService) { }
 
   ngOnInit(): void {
-    this.current_weather_data$ = this.getCurrentWeatherData();
+    this.getCurrentWeatherData()
+    // interval(1000).subscribe(d => this.getCurrentWeatherData())
+  }
+  
+  ngOnDestroy() {
+    // code...
   }
 
-  getCurrentWeatherData(): Observable<WeatherOverviewModel> {
-    return this.weatherService.getCurrentWeatherData();
+  getCurrentWeatherData() {
+    this.current_weather_data$ = this.weatherService.getCurrentWeatherData();
+  }
+
+  updateCurrentWeatherData(): void {
+    this.current_weather_data$ = this.weatherService.getCurrentWeatherData();
   }
 }

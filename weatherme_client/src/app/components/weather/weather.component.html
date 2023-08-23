@@ -3,10 +3,13 @@
     
     <div class="card shadow mt-5">
         <div class="overview-widget card-header">
-            <h3 class="card-title">Now {{ data.current.temp_f }}&#176;F</h3>
+            <h3 class="card-title">
+                Now {{ data.current.temp_f }}&#176;F
+            </h3>
             <h6 class="card-subtitle">
                 <img [attr.src]="data.current.condition.icon"/>
-                {{ data.current.condition.text }}</h6>
+                <span>{{ data.current.condition.text }}</span>
+            </h6>
             
         </div>
 
@@ -14,12 +17,30 @@
             <div class="threeday-overview">
                 <h4 class="card-title">Next 3 Days</h4>
                 <ul class="list-group">
-                    <li class="list-group-item" *ngFor="let data of data.forecast.forecastday">
-                        <h4>{{ data.date | date }}</h4>
-                        <p>
-                            <img [attr.src]="data.day.condition.icon"/>
-                            {{ data.day.maxtemp_f }}&#176;F - {{ data.day.mintemp_f }}&#176;F&nbsp;
-                            Humidity {{ data.day.avghumidity }}%<br/>
+                    <li class="list-group-item" *ngFor="let d of data.forecast.forecastday">
+                        <h4>
+                            <img [attr.src]="d.day.condition.icon"/>
+                            {{ d.date | date }}
+                        </h4>
+                        <p class="flex">
+                            <span class="btn btn-outline-danger temperature-badge shadow" *ngIf="d.day.maxtemp_f > 90">
+                                <img src="assets/temp.png"/> {{ d.day.maxtemp_f }}&#176;F
+                            </span>
+                            <span class="btn btn-outline-warning temperature-badge shadow" *ngIf="d.day.maxtemp_f < 90 && d.day.maxtemp_f >= 75">
+                                <img src="assets/temp.png"/> {{ d.day.maxtemp_f }}&#176;F
+                            </span>
+                            <span class="btn btn-outline-success temperature-badge shadow" *ngIf="d.day.maxtemp_f < 75">
+                                <img src="assets/temp.png"/> {{ d.day.maxtemp_f }}&#176;F
+                            </span>&nbsp;
+                            
+                            <span class="btn btn-outline-success temperature-badge shadow" *ngIf="d.day.mintemp_f < 80 && d.day.mintemp_f >= 70">
+                                <img src="assets/temp.png"/> {{ d.day.mintemp_f }}&#176;F&nbsp;
+                            </span>
+                            <span class="btn btn-outline-primary temperature-badge shadow" *ngIf="d.day.mintemp_f < 70">
+                                <img src="assets/temp.png"/> {{ d.day.mintemp_f }}&#176;F&nbsp;
+                            </span>&nbsp;
+
+                            <span class="btn btn-outline-info temperature-badge shadow"><img src="assets/humidity.png"/> {{ d.day.avghumidity }}%</span>
                         </p>
                     </li>
                 </ul>
