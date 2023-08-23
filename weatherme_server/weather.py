@@ -8,6 +8,9 @@ from flask import request, Blueprint
 
 weather_api = Blueprint('weather_api', __name__)
 
+os.environ['IPSTACK_KEY'] = '2de799aa7783332f9eb3db86d67496f1'  # REMOVE AFTER TESTING
+os.environ['WEATHER_KEY'] = '5dc4e6b937174251beb233810232208'  # TODO: add to docker
+
 @weather_api.route('/api/v1/weather')
 def get_weather():
     ip = request.remote_addr
@@ -25,32 +28,40 @@ def get_weather():
         # Otherwise, set public_ip to the value of ip
         public_ip = ip
 
-    ipStackBaseUri = 'http://api.ipstack.com'
-    os.environ['IPSTACK_KEY'] = '2de799aa7783332f9eb3db86d67496f1'  # REMOVE AFTER TESTING
-    ipStackKey = os.environ.get("IPSTACK_KEY")
+    ip_stack_base_uri = 'http://api.ipstack.com'
+    current_weatherapi_base_uri = 'http://api.weatherapi.com/v1/current.json'
 
-    geo_ip_uri = f'{ipStackBaseUri}/{public_ip}?access_key={ipStackKey}'
+    ip_stack_key = os.environ.get("IPSTACK_KEY")
+    weather_key = os.environ.get("WEATHER_KEY")
+
+    geo_ip_uri = f'{ip_stack_base_uri}/{public_ip}?access_key={ip_stack_key}'
     geo_req = requests.get(geo_ip_uri).json()
 
-    lat = geo_req.get('latitude')
-    lon = geo_req.get('longitude')
+    # lat = geo_req.get('latitude')
+    # lon = geo_req.get('longitude')
+    city = geo_req.get('city')
 
     # Get the weather for the specified lat and lon in geo_req
-    weather_coord_req = requests.get(
-        f'https://api.weather.gov/points/{lat},{lon}'
+
+    # weather_coord_req = requests.get(
+    #     f'https://api.weather.gov/points/{lat},{lon}'
+    # ).json()
+
+    weather_resp = requests.get(
+        f'{current_weatherapi_base_uri}?key={weather_key}&q={city}&aqi=no'
     ).json()
 
     # Pull the URI from the lat,lon request from NWS API.
-    forecast_uri = weather_coord_req['properties']['forecast']
-    weather_req = requests.get(forecast_uri).json()
-    weather_properties = weather_req.get('properties')
-    weather_properties.update({ 
-        'city': geo_req.get('city'),
-        'region_code': geo_req.get('region_code'),
-        'region': geo_req.get('region_name'),
-        'zip': geo_req.get('zip'),
-        'updated': datetime.now()
-    })
+    # forecast_uri = weather_coord_req['properties']['forecast']
+    # weather_req = requests.get(forecast_uri).json()
+    # weather_properties = weather_req.get('properties')
+    # weather_properties.update({ 
+    #     'city': geo_req.get('city'),
+    #     'region_code': geo_req.get('region_code'),
+    #     'region': geo_req.get('region_name'),
+    #     'zip': geo_req.get('zip'),
+    #     'updated': datetime.now()
+    # })
 
     # return weather_req.json()
-    return weather_properties
+    return weather_resp

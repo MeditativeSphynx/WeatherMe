@@ -1,4 +1,24 @@
 <div *ngIf="weather_data$ | async; let data">
-    <h2>Your weather for {{ data.city }}, {{ data.region_code }}</h2>
-</div>
+    <h2>Your weather for {{ data.location.name }}, {{ data.location.region }}</h2>
+    
+    <div class="card mt-5">
+        <div class="card-body">
+            <div class="overview-widget">
+                <h1>{{ data.current.feelslike_f }}&#176;F</h1>
+            </div>
 
+            <div class="few-day-overview">
+                <ul class="list-group">
+                    <li class="list-group-item" *ngFor="let period of data.periods">
+                        <h3>
+                            {{ period.name }}: {{ period.shortForecast }}
+                        </h3>
+                        <p>{{ period.temperature }}&#176;F</p>
+                        <p>{{ period.detailedForecast }}</p>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+    
