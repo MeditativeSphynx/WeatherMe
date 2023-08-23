@@ -11,7 +11,7 @@ weather_api = Blueprint('weather_api', __name__)
 os.environ['IPSTACK_KEY'] = '2de799aa7783332f9eb3db86d67496f1'  # REMOVE AFTER TESTING
 os.environ['WEATHER_KEY'] = '5dc4e6b937174251beb233810232208'  # TODO: add to docker
 
-@weather_api.route('/api/v1/weather')
+@weather_api.route('/api/v1/weather/current')
 def get_weather():
     ip = request.remote_addr
     ip_regex = r'(^[0-9]{2,3})'
@@ -37,31 +37,10 @@ def get_weather():
     geo_ip_uri = f'{ip_stack_base_uri}/{public_ip}?access_key={ip_stack_key}'
     geo_req = requests.get(geo_ip_uri).json()
 
-    # lat = geo_req.get('latitude')
-    # lon = geo_req.get('longitude')
     city = geo_req.get('city')
-
-    # Get the weather for the specified lat and lon in geo_req
-
-    # weather_coord_req = requests.get(
-    #     f'https://api.weather.gov/points/{lat},{lon}'
-    # ).json()
 
     weather_resp = requests.get(
         f'{current_weatherapi_base_uri}?key={weather_key}&q={city}&aqi=no'
     ).json()
 
-    # Pull the URI from the lat,lon request from NWS API.
-    # forecast_uri = weather_coord_req['properties']['forecast']
-    # weather_req = requests.get(forecast_uri).json()
-    # weather_properties = weather_req.get('properties')
-    # weather_properties.update({ 
-    #     'city': geo_req.get('city'),
-    #     'region_code': geo_req.get('region_code'),
-    #     'region': geo_req.get('region_name'),
-    #     'zip': geo_req.get('zip'),
-    #     'updated': datetime.now()
-    # })
-
-    # return weather_req.json()
     return weather_resp

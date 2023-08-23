@@ -20,6 +20,6 @@ export class WeatherComponent {
 
   getWeatherData(): Observable<WeatherOverviewModel> {
     console.log('>>> something');
-    return this.weatherService.getWeatherData();
+    return this.weatherService.getCurrentWeatherData();
   }
 }
