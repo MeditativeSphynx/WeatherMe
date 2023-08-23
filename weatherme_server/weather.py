@@ -19,6 +19,7 @@ weatherapi_base_uri = 'http://api.weatherapi.com/v1'
 
 @weather_api.route('/api/v1/weather/current')
 def get_weather_data():
+    # get the client user's ip.
     ip = request.remote_addr
     ip_regex = r'(^[0-9]{2,3})'
     local_ip_first_octets = [
