@@ -50,4 +50,5 @@ interface CurrentWeatherModel {
 export interface WeatherOverviewModel {
     location: LocationModel;
     current: CurrentWeatherModel;
+    forecast: any | undefined;
 }

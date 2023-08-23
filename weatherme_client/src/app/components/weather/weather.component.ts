@@ -9,17 +9,16 @@ import { WeatherService } from 'src/app/services/weather.service';
   styleUrls: ['./weather.component.sass']
 })
 export class WeatherComponent {
-  weather_data$?: Observable<WeatherOverviewModel>;
+  current_weather_data$?: Observable<WeatherOverviewModel>;
   weather_service: WeatherService = inject(WeatherService);
 
   constructor(private weatherService: WeatherService) { }
 
   ngOnInit(): void {
-    this.weather_data$ = this.getWeatherData();
+    this.current_weather_data$ = this.getCurrentWeatherData();
   }
 
-  getWeatherData(): Observable<WeatherOverviewModel> {
-    console.log('>>> something');
+  getCurrentWeatherData(): Observable<WeatherOverviewModel> {
     return this.weatherService.getCurrentWeatherData();
   }
 }

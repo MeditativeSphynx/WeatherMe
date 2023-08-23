@@ -11,8 +11,14 @@ weather_api = Blueprint('weather_api', __name__)
 os.environ['IPSTACK_KEY'] = '2de799aa7783332f9eb3db86d67496f1'  # REMOVE AFTER TESTING
 os.environ['WEATHER_KEY'] = '5dc4e6b937174251beb233810232208'  # TODO: add to docker
 
+ip_stack_key = os.environ.get("IPSTACK_KEY")
+weather_key = os.environ.get("WEATHER_KEY")
+
+ip_stack_base_uri = 'http://api.ipstack.com'
+weatherapi_base_uri = 'http://api.weatherapi.com/v1'
+
 @weather_api.route('/api/v1/weather/current')
-def get_weather():
+def get_weather_data():
     ip = request.remote_addr
     ip_regex = r'(^[0-9]{2,3})'
     local_ip_first_octets = [
@@ -28,19 +34,13 @@ def get_weather():
         # Otherwise, set public_ip to the value of ip
         public_ip = ip
 
-    ip_stack_base_uri = 'http://api.ipstack.com'
-    current_weatherapi_base_uri = 'http://api.weatherapi.com/v1/current.json'
-
-    ip_stack_key = os.environ.get("IPSTACK_KEY")
-    weather_key = os.environ.get("WEATHER_KEY")
-
     geo_ip_uri = f'{ip_stack_base_uri}/{public_ip}?access_key={ip_stack_key}'
     geo_req = requests.get(geo_ip_uri).json()
 
     city = geo_req.get('city')
 
     weather_resp = requests.get(
-        f'{current_weatherapi_base_uri}?key={weather_key}&q={city}&aqi=no'
+        f'{weatherapi_base_uri}/forecast.json?key={weather_key}&q={city}&aqi=no&days=3'
     ).json()
 
     return weather_resp

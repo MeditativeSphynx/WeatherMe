@@ -1,20 +1,26 @@
-<div *ngIf="weather_data$ | async; let data">
+<div *ngIf="current_weather_data$ | async; let data">
     <h2>Your weather for {{ data.location.name }}, {{ data.location.region }}</h2>
     
-    <div class="card mt-5">
-        <div class="card-body">
-            <div class="overview-widget">
-                <h1>{{ data.current.feelslike_f }}&#176;F</h1>
-            </div>
+    <div class="card shadow mt-5">
+        <div class="overview-widget card-header">
+            <h3 class="card-title">Now {{ data.current.temp_f }}&#176;F</h3>
+            <h6 class="card-subtitle">
+                <img [attr.src]="data.current.condition.icon"/>
+                {{ data.current.condition.text }}</h6>
+            
+        </div>
 
-            <div class="few-day-overview">
+        <div class="card-body">
+            <div class="threeday-overview">
+                <h4 class="card-title">Next 3 Days</h4>
                 <ul class="list-group">
-                    <li class="list-group-item" *ngFor="let period of data.periods">
-                        <h3>
-                            {{ period.name }}: {{ period.shortForecast }}
-                        </h3>
-                        <p>{{ period.temperature }}&#176;F</p>
-                        <p>{{ period.detailedForecast }}</p>
+                    <li class="list-group-item" *ngFor="let data of data.forecast.forecastday">
+                        <h4>{{ data.date | date }}</h4>
+                        <p>
+                            <img [attr.src]="data.day.condition.icon"/>
+                            {{ data.day.maxtemp_f }}&#176;F - {{ data.day.mintemp_f }}&#176;F&nbsp;
+                            Humidity {{ data.day.avghumidity }}%<br/>
+                        </p>
                     </li>
                 </ul>
             </div>
