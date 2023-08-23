@@ -16,6 +16,7 @@ export class WeatherService {
     return this.http.get<WeatherOverviewModel>(this.server_uri);
   }
 
+  // WIP
   updateCurrentWeatherData(): Observable<WeatherOverviewModel> {
     return this.http.get<WeatherOverviewModel>(this.server_uri)
   }

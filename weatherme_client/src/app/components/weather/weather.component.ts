@@ -18,7 +18,8 @@ export class WeatherComponent {
 
   ngOnInit(): void {
     this.getCurrentWeatherData();
-    interval(60000).subscribe(d => this.getCurrentWeatherData())
+    // TODO: Make updating the data, more fluid and subtle.
+    interval(60000).subscribe(() => this.getCurrentWeatherData());
   }
 
   getCurrentWeatherData(): void {
