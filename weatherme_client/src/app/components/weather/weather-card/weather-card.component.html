@@ -1,0 +1,9 @@
+<div *ngIf="currentWeather">
+    <h2>Your weather for {{ currentWeather.location.name }}, {{ currentWeather.location.region }}</h2>
+</div>
+
+<div *ngIf="currentWeather">
+    <div class="card shadow mt-5">
+        <app-card-header [currentTempF]="currentWeather.current.temp_f"></app-card-header>
+    </div>
+</div>

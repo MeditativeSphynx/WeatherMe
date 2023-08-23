@@ -1,17 +1,16 @@
+<!--
+    Future refactoring would require this to be broken up into child-components.
+
+    WIP: Components have been made but not structured.
+-->
+
 <div *ngIf="current_weather_data$ | async; let data">
     <h2>Your weather for {{ data.location.name }}, {{ data.location.region }}</h2>
     
     <div class="card shadow mt-5">
-        <div class="overview-widget card-header">
-            <h3 class="card-title">
-                Now {{ data.current.temp_f }}&#176;F
-            </h3>
-            <h6 class="card-subtitle">
-                <img [attr.src]="data.current.condition.icon"/>
-                <span>{{ data.current.condition.text }}</span>
-            </h6>
-            
-        </div>
+        <app-card-header [currentTempF]="data.current.temp_f"
+                         [currentConditionsIcon]="data.current.condition.icon"
+                         [currentConditionsText]="data.current.condition.text"></app-card-header>
 
         <div class="card-body">
             <div class="threeday-overview">
